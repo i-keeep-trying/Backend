@@ -1,34 +1,15 @@
 const express = require('express');
+const registerRoute = require('./routes/registeredRoutes');
+const cors = require('cors');
+const connectToDatabase = require('./db');
+
 const app = express();
-const userRoutes = require('./routes/userRoutes');
+connectToDatabase();
 
-function middlewareToAddHelloWorldText(req, res, next) {
-    res.customData = 'This is added using middleware\n';
-    next();
-}
+app.use(cors());
 
-function authenticate(req, res, next) {
-    // Write code for athentication
-    // by checking token on req Object
-    // Writing code for failed authentication
-    res.statusCode = 401;
-    res.write('Authentication Failed\n');
-    res.end();
-}
+app.use('/api/register', registerRoute);
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World');
-// });
-
-// app.post('/', (req, res) => {
-//     res.send('Got a POST request');
-// });
-
-// app.get('/users', (req, res) => {
-//     res.send('Hello users');
-// });
-app.use('/users', authenticate, middlewareToAddHelloWorldText,  userRoutes);
-
-app.listen(8080, () => {
-    console.log('Server is running on http://localhost:8080');
+app.listen(3030, () => {
+    console.log('Server is running on http://localhost:3030');
 });
