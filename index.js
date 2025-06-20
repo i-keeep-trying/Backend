@@ -1,15 +1,23 @@
+// server.js
 const express = require('express');
-const registerRoute = require('./routes/registeredRoutes');
+const connectToDatabase = require('./config/db');
+
+const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
-const connectToDatabase = require('./db');
 
 const app = express();
+app.use(cors());
+app.use(express.json())
+
 connectToDatabase();
 
-app.use(cors());
+app.use('/api/users', userRoutes);
 
-app.use('/api/register', registerRoute);
 
-app.listen(3030, () => {
-    console.log('Server is running on http://localhost:3030');
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
+
+
