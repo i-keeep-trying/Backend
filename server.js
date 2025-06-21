@@ -12,7 +12,7 @@ app.use(express.json())
 
 connectToDatabase();
 
-app.use('/api/users', userRoutes);
+app.use('/users', userRoutes);
 
 
 // Start the server
