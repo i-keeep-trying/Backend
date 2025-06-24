@@ -1,15 +1,12 @@
 const express = require("express");
-const { createCanvas, updateCanvas, loadCanvas, shareCanvas, unshareCanvas, deleteCanvas, getUserCanvases} = require("../controllers/canvasController");
+const router = express.Router();
+const { getAllCanvases,  createCanvas, loadCanvas, updateCanvas, shareCanvas, deleteCanvas } = require("../controllers/canvasController");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 
-const router = express.Router();
-
-router.post("/create", authMiddleware, createCanvas); 
-router.put("/update", authMiddleware, updateCanvas); 
-router.get("/load/:id", authMiddleware, loadCanvas); 
-router.put("/share/:id", authMiddleware, shareCanvas); 
-router.put("/unshare/:id", authMiddleware, unshareCanvas);
-router.delete("/delete/:id", authMiddleware, deleteCanvas); 
-router.get("/list", authMiddleware, getUserCanvases);
-
+router.get('/', authMiddleware, getAllCanvases);
+router.post('/', authMiddleware, createCanvas);
+router.get('/load/:id', authMiddleware, loadCanvas);
+router.put('/:id', authMiddleware, updateCanvas);
+router.put('/share/:id', authMiddleware, shareCanvas);
+router.delete('/:id', authMiddleware, deleteCanvas);
 module.exports = router;
