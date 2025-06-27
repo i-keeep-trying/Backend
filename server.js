@@ -26,6 +26,10 @@ const canvasData = {};
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
+    socket.on("latencyCheck", (callback) => {
+        callback(); // Respond immediately for round-trip measurement
+    });
+
     // Join canvas room with authentication
     socket.on("joinCanvas", async ({ canvasId }) => {
         try {
